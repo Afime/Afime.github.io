@@ -1,0 +1,28 @@
+{
+  "folders": [
+    {
+      "name": "前端",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/node_modules": true,
+      "**/.DS_Store": true
+    },
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/*.mp4": true
+    },
+    "files.encoding": "utf8",
+    "files.eol": "\n",
+    "editor.formatOnSave": true
+  },
+  "extensions": {
+    "recommendations": [
+      "esbenp.prettier-vscode",
+      "dbaeumer.vscode-eslint",
+      "ritwickdey.LiveServer"
+    ]
+  }
+}

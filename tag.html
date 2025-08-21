@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>标签 - 详情</title>
+    <link rel="stylesheet" href="components/navbar.css" />
+    <link rel="stylesheet" href="components/responsive.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=LXGW+WenKai&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC',
+          'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+        color: #1f2937;
+        line-height: 1.75;
+        font-size: 16px;
+      }
+      :root {
+        --bg: #f7f8fb;
+        --card: #ffffff;
+        --text: #333;
+        --muted: #667085;
+        --primary: #667eea;
+        --shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+        --radius: 14px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 80px auto 40px;
+        padding: 0 20px;
+      }
+
+      /* 两栏布局 */
+      .tag-layout {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        gap: 24px;
+      }
+      /* 响应式规则已统一到 components/responsive.css */
+
+      /* 侧栏卡片通用样式 */
+      .side-card {
+        background: var(--card);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 16px;
+      }
+      .sidebar {
+        position: relative;
+        font-family: 'LXGW WenKai', 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'STSong',
+          serif;
+      }
+      @media (min-width: 961px) {
+        .sidebar {
+          position: sticky;
+          top: 92px;
+          height: fit-content;
+        }
+      }
+
+      /* 个人信息卡 */
+      .profile-card {
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+      }
+      .profile-card .banner {
+        height: 100px;
+        margin: -16px -16px 0 -16px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 1) 95%),
+          url('https://files.codelife.cc/wallhaven/full/6d/wallhaven-6dg7ll.png?x-oss-process=image/resize,limit_0,m_fill,w_1600,h_900/quality,Q_92/format,webp')
+            center/cover no-repeat;
+      }
+      .profile-card .logo {
+        width: 112px;
+        height: 112px;
+        border-radius: 50%;
+        background: url('https://zyyo.net/usr/themes/Zyang/static/img/logo.jpg') center/cover;
+        box-shadow: var(--shadow);
+        margin: -56px auto 0;
+        display: block;
+        border: 4px solid #fff;
+      }
+      .profile-card .name {
+        font-size: 22px;
+        font-weight: 700;
+        margin: 6px 0 2px; /* 进一步压缩垂直间距 */
+      }
+      .profile-card .desc {
+        color: var(--muted);
+        font-size: 16px;
+        margin-bottom: 2px; /* 再次压缩与统计之间的垂直空隙 */
+      }
+      .profile-card .stats {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 32px;
+        margin-top: 6px; /* 上移，贴近描述 */
+      }
+      .profile-card .stats .item {
+        padding: 4px 0;
+        text-align: center;
+        position: relative;
+      }
+      .profile-card .stats .item + .item::before {
+        content: '';
+        position: absolute;
+        left: -18px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1px;
+        height: 24px;
+        background: #e5e7eb;
+      }
+      .profile-card .stats .item p {
+        margin: 0;
+      }
+      .profile-card .stats .item p:nth-child(1) {
+        color: #374151;
+        font-size: 16px;
+        font-weight: 700;
+      }
+      .profile-card .stats .item p:nth-child(2) {
+        font-weight: 700;
+        color: #111827;
+        font-size: 18px;
+      }
+
+      /* 侧栏小节标题 */
+      .side-card h3 {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0 0 12px;
+        font-size: 18px;
+      }
+      .side-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .side-list li {
+        margin: 8px 0;
+      }
+      .side-list a {
+        color: var(--text);
+        text-decoration: none;
+        font-size: 14px;
+      }
+      .side-list a:hover {
+        color: var(--primary);
+      }
+
+      /* 标签云 */
+      .tag-cloud {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .tag-chip {
+        background: #f3f4f6;
+        color: var(--text);
+        border-radius: 20px;
+        padding: 6px 12px;
+        font-size: 14px;
+      }
+
+      /* 主内容 - 头图卡片换为背景大图 */
+      .tag-hero {
+        background: linear-gradient(180deg, rgba(17, 24, 39, 0.35), rgba(17, 24, 39, 0.6)),
+          url('https://files.codelife.cc/wallhaven/full/8o/wallhaven-8opx8k.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp')
+            center/cover no-repeat;
+        border-radius: var(--radius);
+        padding: 24px;
+        box-shadow: var(--shadow);
+        margin-bottom: 16px;
+        height: 200px;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: center; /* 垂直居中 */
+        align-items: flex-start; /* 左对齐 */
+        text-align: left;
+      }
+      .hero-tags,
+      .hero-meta {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .hero-tags {
+        margin-bottom: 8px;
+      }
+      .hero-meta {
+        margin-top: 12px;
+      }
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 12px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.14);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        color: #fff;
+        backdrop-filter: blur(6px);
+        font-size: 14px;
+      }
+      .chip svg {
+        width: 16px;
+        height: 16px;
+        fill: currentColor;
+      }
+      .tag-hero h1 {
+        margin: 0;
+        font-size: 28px;
+        font-weight: 800;
+        letter-spacing: 0.2px;
+        color: #ffffff;
+        text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      }
+      .tag-hero .muted {
+        color: #e5e7eb;
+        margin-top: 6px;
+        font-size: 14px;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+      }
+
+      /* 统计面板 */
+      .stats-board {
+        background: var(--card);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 16px;
+      }
+      .stats-board h3 {
+        margin: 0 0 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 16px;
+      }
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 124px);
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 12px;
+        padding: 0 16px;
+      }
+      .stat-box {
+        background: #ffffff;
+        border: 1px solid #eef2f7;
+        border-radius: 10px;
+        padding: 8px 6px;
+        text-align: center;
+        color: #111827;
+      }
+      .stat-box .label {
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 2px;
+      }
+      .stat-box .value {
+        font-size: 18px;
+      }
+      .stats-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+        padding: 0 16px;
+      }
+      .stats-tags a.tag-chip {
+        text-decoration: none;
+        color: var(--text);
+        background: #f3f4f6;
+      }
+
+      /* 评论区 */
+      .comments {
+        margin-top: 24px;
+      }
+      .comments .title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+      .comment-card {
+        background: var(--card);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 16px;
+      }
+      .comment-card .row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+      .comment-card input,
+      .comment-card textarea {
+        width: 100%;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        padding: 10px 12px;
+        font-family: inherit;
+      }
+      .comment-card textarea {
+        min-height: 100px;
+        resize: vertical;
+      }
+      .comment-card .bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 8px;
+      }
+      .btn-primary {
+        background: var(--primary);
+        color: #fff;
+        border: 0;
+        border-radius: 10px;
+        padding: 8px 14px;
+        cursor: pointer;
+      }
+      .btn-primary:hover {
+        filter: brightness(1.05);
+      }
+
+      /* 正文排版 */
+      .article-content {
+        background: var(--card);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 28px 32px;
+        font-family: 'LXGW WenKai', 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'STSong',
+          'SimSun', serif;
+        letter-spacing: 0.2px;
+        font-size: 20px;
+        color: #111827;
+      }
+      .article-content h1,
+      .article-content h2,
+      .article-content h3 {
+        color: #111827;
+        line-height: 1.35;
+        margin: 22px 0 12px;
+        font-weight: 800;
+      }
+      .article-content h2 {
+        font-size: 22px;
+      }
+      .article-content h3 {
+        font-size: 18px;
+      }
+      .article-content p {
+        margin: 0 0 14px;
+        color: #111827;
+        font-weight: 600;
+      }
+      .article-content ul,
+      .article-content ol {
+        padding-left: 1.25rem;
+        margin: 0 0 14px;
+      }
+      .article-content li {
+        margin: 6px 0;
+        font-weight: 600;
+      }
+      .article-content a {
+        color: #3b82f6;
+        text-decoration: none;
+      }
+      .article-content a:hover {
+        text-decoration: underline;
+      }
+      .article-content blockquote {
+        margin: 12px 0;
+        padding: 8px 12px;
+        background: #f8fafc;
+        border-left: 3px solid #93c5fd;
+        color: #334155;
+        border-radius: 6px;
+      }
+      .article-content code {
+        background: #f3f4f6;
+        border-radius: 4px;
+        padding: 2px 6px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+          'Courier New', monospace;
+        font-size: 0.95em;
+      }
+
+      /* 最近文章（侧栏） */
+      .recent-card h3 {
+        margin: 0 0 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 16px;
+      }
+      .recent-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .recent-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .recent-item img {
+        width: 68px;
+        height: 48px;
+        border-radius: 8px;
+        object-fit: cover;
+        background: #e5e7eb;
+        box-shadow: var(--shadow);
+      }
+      .recent-item .info {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .recent-item .title {
+        color: #111827;
+        text-decoration: none;
+        max-width: 160px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .recent-item .title:hover {
+        color: #3b82f6;
+      }
+      .recent-item .date {
+        color: #98a2b3;
+        font-size: 12px;
+      }
+
+      /* 返回顶部按钮 */
+      .back-to-top {
+        position: fixed;
+        right: 24px;
+        bottom: 28px;
+        width: 44px;
+        height: 44px;
+        border: 1px solid #e5e7eb;
+        border-radius: 50%;
+        background: #ffffff; /* 白底 */
+        color: #111827; /* 箭头黑色（使用 currentColor） */
+        box-shadow: var(--shadow);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(8px);
+        transition: opacity 0.25s ease, transform 0.25s ease, box-shadow 0.2s ease;
+        z-index: 2000;
+      }
+      .back-to-top:hover {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      }
+      .back-to-top svg {
+        width: 20px;
+        height: 20px;
+        fill: currentColor;
+      }
+      .back-to-top.show {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 导航栏模板容器 -->
+    <div id="navbar-container"></div>
+    <!-- 本地 file:// 回退导航模板（仅在 fetch 失败时注入） -->
+    <template id="navbar-fallback-template">
+      <div class="header">
+        <div class="header_container">
+          <a href="index.html" class="header_logo" id="logoElement">
+            <div class="logo-icon"><div class="rh-image"></div></div>
+            <div class="afime-image"><div class="afime-text"></div></div>
+          </a>
+          <div class="nav-menu">
+            <div class="nav-item">
+              <a href="tags.html" style="text-decoration: none; color: inherit"
+                ><span>标签</span></a
+              >
+            </div>
+            <div class="nav-item dropdown">
+              <span>分类</span>
+              <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z" /></svg>
+              <div class="dropdown-menu">
+                <div class="dropdown-item">记录点滴</div>
+                <div class="dropdown-item">灵感相矢</div>
+                <div class="dropdown-item">闲言碎语</div>
+                <div class="dropdown-item">实用分享</div>
+              </div>
+            </div>
+            <div class="nav-item dropdown">
+              <span>页面</span>
+              <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z" /></svg>
+              <div class="dropdown-menu">
+                <div class="dropdown-item">
+                  <a href="photo.html" style="text-decoration: none; color: inherit">相册</a>
+                </div>
+                <div class="dropdown-item">
+                  <a href="about.html" style="text-decoration: none; color: inherit">关于</a>
+                </div>
+                <div class="dropdown-item">
+                  <a href="friends.html" style="text-decoration: none; color: inherit">友链</a>
+                </div>
+                <div class="dropdown-item">
+                  <a href="ly.html" style="text-decoration: none; color: inherit">留言</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="header-icons">
+            <button class="lets-talk-btn" id="fallbackLetsTalk">Let's Talk</button>
+          </div>
+        </div>
+      </div>
+      <!-- 联系信息模态框（简化回退版） -->
+      <div id="contactModal" class="modal" style="display: none">
+        <div class="modal-content">
+          <span class="close" id="fallbackClose">&times;</span>
+          <h2>联系我</h2>
+          <div class="contact-info">
+            <div class="contact-item">
+              <span class="contact-label">QQ:</span><span class="contact-value">2801110917</span
+              ><button class="copy-btn" data-copy="2801110917">复制</button>
+            </div>
+            <div class="contact-item">
+              <span class="contact-label">微信:</span><span class="contact-value">Rhai_0-0_</span
+              ><button class="copy-btn" data-copy="Rhai_0-0_">复制</button>
+            </div>
+            <div class="contact-item">
+              <span class="contact-label">邮箱:</span
+              ><span class="contact-value">2801110917@qq.com</span
+              ><button class="copy-btn" data-copy="2801110917@qq.com">复制</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <div class="container tag-layout">
+      <aside class="sidebar">
+        <div class="side-card profile-card">
+          <div class="banner"></div>
+          <div class="logo" id="profileAvatar"></div>
+          <div class="name">Afime</div>
+          <div class="desc">用一万个日常</div>
+          <div class="stats">
+            <div class="item">
+              <p>文章</p>
+              <p id="stat-articles">23</p>
+            </div>
+            <div class="item">
+              <p>标签</p>
+              <p id="stat-tags">25</p>
+            </div>
+            <div class="item">
+              <p>评论</p>
+              <p id="stat-comments">507</p>
+            </div>
+          </div>
+        </div>
+        <!-- 左侧：数据统计 + 标签云（主统计卡也可放在这里，如需精简可移除下方主卡） -->
+        <section id="stats" class="stats-board" style="margin-top: 16px">
+          <h3>数据统计</h3>
+          <div class="stats-grid">
+            <div class="stat-box">
+              <div class="label">成立</div>
+              <div class="value" id="stat-days-side">0天</div>
+            </div>
+            <div class="stat-box">
+              <div class="label">文章</div>
+              <div class="value" id="stat-articles-side">23篇</div>
+            </div>
+            <div class="stat-box">
+              <div class="label">评论</div>
+              <div class="value" id="stat-comments-side">507条</div>
+            </div>
+            <div class="stat-box">
+              <div class="label">标签</div>
+              <div class="value" id="stat-tags-side">1个</div>
+            </div>
+          </div>
+          <div class="stats-tags" id="tag-list-side"></div>
+        </section>
+
+        <div class="side-card recent-card" style="margin-top: 16px">
+          <h3>最近文章</h3>
+          <ul class="recent-list" id="recent-list-side"></ul>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <div class="tag-hero">
+          <h1 id="title">千年老二</h1>
+          <div class="hero-meta">
+            <span class="chip">Afime</span>
+            <span class="chip">2025-08-18</span>
+          </div>
+        </div>
+
+        <!-- 右侧：正文 -->
+        <section class="article-content">
+          <h2>千年老二</h2>
+          <p>
+            “千年老二”这个称号，是在初中稳稳落在我头上的。那所学校有个好听的名字，“花园学校”，位于市区的边缘，却实实在在是个山乡结合部。树木葱茏是有的，鸟雀啁啾也是有的，只是与“现代”二字相去甚远。印象最深的是那条跑道，铺着厚厚的煤渣。晨跑时分，脚步落下，便扬起滚滚烟尘，跑完一圈，鼻腔里都是细密的黑色颗粒，喉咙也发咸。环境大抵如此。
+          </p>
+          <p>
+            一个年级四个班，不过两三百人。就在这样一个不大的天地里，“千年老二”成了我甩不脱的标签。年级第一的位置常易其主，张三李四轮流坐庄。唯独我身后的第二名，像生了根，纹丝不动。我有时自嘲：“自称千年第二，无人敢称千年第一。”
+          </p>
+          <p>
+            我骨子里是好胜的。小学时，考试成绩独占鳌头是常态。然而一旦走出书本的疆域，世界便不再轻易臣服。曾苦练乒乓球，憋着一股劲想在小学比赛中夺魁，最终却止步亚军。更早些年，学校空地是我们的乐园。弹珠、拍画片，我总要赢下最多，那些花花绿绿的玻璃球和硬纸片，仿佛就是无上的战利品。后来桥头有了网吧，我的战场转移了。从赛尔号、洛克王国、奥奇传说，到CF、QQ飞车、LOL，我投入了大量的时间，渴望在虚拟的世界里击败每一个熟悉的对手。屏幕的光映着年轻而专注的脸，键盘的敲击声是唯一的战歌。然而结果总是一样：在这个游戏里被打不过A，在那个游戏又被B吊打。似乎总有人比我更胜一筹。
+          </p>
+          <p>
+            升入初中，连学业这最后的堡垒也宣告失守。名次稳定地定格在第二。假期里昏天黑地地练习LOL，指望着技艺精进，终究比不上隔壁班那个天赋异禀的同学。之后报了吉他班，幻想在元旦晚会上成为聚光灯下的主角，手指磨出了茧，最终却只能在角落里为主唱伴奏。后来班里悄然兴起了恋爱风潮，看着别人成双入对，自己的恋爱却笨拙得像个局外人。似乎在任何我想尝试的领域，都有人做得比我更轻松、更出色。
+          </p>
+          <p>
+            中考的结局带着命运式的讽刺。文化课成绩，我竟意外地考了年级第一。那一刻，仿佛长久笼罩的阴影即将散去。然而考前一场突如其来的大病，彻底击垮了体育考试。最终，总分相加，那顶“千年老二”的帽子，依然沉重而牢固地戴回了我的头上。像是一个精心设计的玩笑。
+          </p>
+          <p>
+            上了高中，才发现自己才刚走出了大山，无论是哪一科成绩，哪一项运动，还是唱歌，乐器，还有长相和受欢迎程度，总会有人比你厉害。
+          </p>
+          <p>
+            其实我不是第一天知道自己不是主角，不是世界的中心。在我大概很小的一个中午，那天是个大太阳，我对着天大喊能不能下雨，喊了足足十分钟，老天爷没有半点反应。那天下午我想了很久，相通了我原来不是世界的中心。
+          </p>
+          <p>
+            写到这里，一种清晰的自我认知浮现出来：这像是一种根植于好胜心的盲目追逐。看到别人在某个领域闪光，内心便涌起一股冲动，想要参与其中，甚至超越。然而投入之后，往往发现天赋、积累或时运的鸿沟难以跨越，最终收获的只是“第二”的失落。后来我理解到，这或许源于一种潜在的“全能感幻觉”——内心深处曾隐隐相信，只要自己愿意，总能在任何领域拔得头筹。现实的铁壁一次次将这种幻觉击碎：游戏世界里有浸淫更深的高手，音乐需要独特的灵性，学业上的竞争者同样勤奋而聪慧，情感的微妙更非仅凭意愿就能掌控。这种“理应全能”的泡沫破灭后，留下的是持续的焦虑和深刻的挫败感。
+          </p>
+          <p>
+            如今，隔着岁月的烟尘回望那所煤灰弥漫的学校，那些在网吧屏幕前鏖战的日夜，那些抱着吉他反复练习的午后，那些盯着成绩单上“2”字时的不甘与困惑……它们并未褪色。
+          </p>
+          <p>
+            “千年第二”这个称谓，跟随了我整个少年时代。它不是勋章，却也并非耻辱的烙印。它更像是一面不断擦拭的镜子，映照出我内心深处的躁动与虚妄。它一次次温和而坚定地提醒我：世界的广阔远超想象，山外有山，人外有人。有人生而敏锐，有人长于技艺，有人际遇非凡。
+          </p>
+          <p>
+            我那旺盛的好胜心，在无数次“第二”的确认中，并未熄灭，只是被淬炼得更加清醒。我不再执着于在每一座山头都插上胜利的旗帜。有些高峰，攀登的过程本身已蕴含意义；有些风景，欣赏他人的光芒亦能获得愉悦。
+          </p>
+          <p>
+            “千年第二”的经历，让我更早地学会了在努力与接受之间寻找平衡。它教会我低头审视自身的边界，也教会我抬头仰望星空的浩瀚。承认自己并非无所不能，有时反而是一种解脱，通向一种更为踏实和从容的自在。
+          </p>
+        </section>
+
+        <section id="comments" class="comments">
+          <div class="title">评论</div>
+          <form class="comment-card" onsubmit="event.preventDefault(); alert('已提交（示例）');">
+            <div class="row">
+              <input type="text" placeholder="昵称" required />
+              <input type="email" placeholder="邮箱" required />
+              <input type="url" placeholder="网站（可选）" />
+            </div>
+            <textarea placeholder="说点什么..." required></textarea>
+            <div class="bottom">
+              <span class="muted">理性发言，友善交流</span>
+              <button class="btn-primary" type="submit">发表</button>
+            </div>
+          </form>
+        </section>
+      </main>
+    </div>
+
+    <!-- 返回顶部按钮 -->
+    <button id="backTop" class="back-to-top" aria-label="返回顶部" title="返回顶部">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 5l7 7-1.41 1.41L13 10.83V19h-2v-8.17l-4.59 4.58L5 12z" />
+      </svg>
+    </button>
+
+    <script>
+      // 动态加载导航栏模板（保持任何页面一致）
+      (function loadNavbar() {
+        const container = document.getElementById('navbar-container');
+        if (!container) return;
+        fetch('components/navbar.html')
+          .then((res) => res.text())
+          .then((html) => {
+            container.innerHTML = html;
+          })
+          .catch(() => {
+            const tpl = document.getElementById('navbar-fallback-template');
+            if (tpl && 'content' in tpl) {
+              container.appendChild(tpl.content.cloneNode(true));
+              const openBtn = document.getElementById('fallbackLetsTalk');
+              const closeBtn = document.getElementById('fallbackClose');
+              const modal = document.getElementById('contactModal');
+              if (openBtn && modal) openBtn.onclick = () => (modal.style.display = 'block');
+              if (closeBtn && modal) closeBtn.onclick = () => (modal.style.display = 'none');
+              container.querySelectorAll('.copy-btn').forEach((b) => {
+                b.addEventListener('click', () => {
+                  const v = b.getAttribute('data-copy') || '';
+                  try {
+                    navigator.clipboard && navigator.clipboard.writeText(v);
+                  } catch (e) {}
+                });
+              });
+            }
+          });
+      })();
+      function getParam(name) {
+        const u = new URLSearchParams(location.search);
+        return u.get(name) || '';
+      }
+      const tag = decodeURIComponent(getParam('tag')) || '千年老二';
+      const titleEl = document.getElementById('title');
+      if (titleEl) titleEl.textContent = `${tag}`;
+
+      // 动态设置头像（本地文件：头像.jpg，与本页面同目录）
+      (function setLocalAvatar() {
+        const avatarEl = document.getElementById('profileAvatar');
+        if (avatarEl) {
+          avatarEl.style.backgroundImage = "url('头像.jpg')";
+        }
+      })();
+
+      // 生成统计与标签
+      // 使用UTC日粒度避免时区/夏令时带来的偏移
+      const founded = new Date(2025, 7, 12); // 2025-08-12，本地时区
+      function diffDays(from, to) {
+        const start = Date.UTC(from.getFullYear(), from.getMonth(), from.getDate());
+        const end = Date.UTC(to.getFullYear(), to.getMonth(), to.getDate());
+        return Math.max(0, Math.floor((end - start) / 86400000));
+      }
+      // 同步左侧数据统计
+      document.getElementById('stat-days-side').textContent = diffDays(founded, new Date()) + '天';
+      document.getElementById('stat-articles-side').textContent = '1篇';
+      document.getElementById('stat-comments-side').textContent = '999+';
+      document.getElementById('stat-tags-side').textContent = '1个';
+
+      // 同步个人信息卡上的统计
+      const topArticles = document.getElementById('stat-articles');
+      const topTags = document.getElementById('stat-tags');
+      const topComments = document.getElementById('stat-comments');
+      if (topArticles) topArticles.textContent = '1';
+      if (topTags) topTags.textContent = '1';
+      if (topComments) topComments.textContent = '999+';
+
+      const tagList = [{ name: '千年老二', count: 2 }];
+      const tagListEl = document.getElementById('tag-list-side');
+      tagList.forEach((t) => {
+        const a = document.createElement('a');
+        a.className = 'tag-chip';
+        a.href = `tag.html?tag=${encodeURIComponent(t.name)}`;
+        a.textContent = `#${t.name}`;
+        tagListEl.appendChild(a);
+      });
+
+      // 最近文章（示例数据，可替换为真实来源）
+      const recentPosts = [
+        {
+          title: '千年老二',
+          date: '2025-08-18',
+          cover: 'https://zyyo.net/usr/themes/Zyang/static/img/default.webp',
+          url: '#',
+        },
+      ];
+      const recentListEl = document.getElementById('recent-list-side');
+      recentPosts.forEach((p) => {
+        const li = document.createElement('li');
+        li.className = 'recent-item';
+        li.innerHTML = `<img src="${p.cover}" alt="thumb"/><div class="info"><a class="title" href="${p.url}">${p.title}</a><div class="date">${p.date}</div></div>`;
+        recentListEl.appendChild(li);
+      });
+
+      // 平滑锚点滚动（考虑固定导航栏高度偏移）
+      function smoothScrollToId(id) {
+        const target = document.getElementById(id);
+        if (!target) return;
+        const headerOffset = 84; // 预留导航高度
+        const rect = target.getBoundingClientRect();
+        const offsetTop = window.pageYOffset + rect.top - headerOffset;
+        window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+      }
+
+      document.querySelectorAll('a[href^="#"]').forEach((a) => {
+        a.addEventListener('click', (e) => {
+          const href = a.getAttribute('href');
+          const id = href.slice(1);
+          if (id) {
+            e.preventDefault();
+            smoothScrollToId(id);
+            history.pushState(null, '', `#${id}`);
+          }
+        });
+      });
+
+      // 返回顶部按钮逻辑
+      const backTop = document.getElementById('backTop');
+      function toggleBackTop() {
+        if (window.scrollY > 400) backTop.classList.add('show');
+        else backTop.classList.remove('show');
+      }
+      window.addEventListener('scroll', toggleBackTop, { passive: true });
+      toggleBackTop();
+      backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    </script>
+  </body>
+</html>

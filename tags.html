@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html class="zyyo.net">
+  <head class="zyyo.net">
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>标签 - Afime</title>
+    <link rel="icon" href="https://zyyo.net/usr/themes/Zyang/static/img/favicon.ico" />
+    <!-- 引入导航栏样式 -->
+    <link rel="stylesheet" href="components/navbar.css" />
+    <link rel="stylesheet" href="components/responsive.css" />
+    <!-- 加载现代文艺字体 -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=LXGW+WenKai&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* 全局字体设置 */
+      * {
+        font-family: 'LXGW WenKai', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif;
+      }
+
+      /* 确保模态框使用正确的字体和样式 */
+      .modal-content {
+        font-family: 'LXGW WenKai', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif !important;
+      }
+
+      .modal-content h2 {
+        font-family: 'LXGW WenKai', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif !important;
+      }
+
+      .contact-label,
+      .contact-value,
+      .copy-btn {
+        font-family: 'LXGW WenKai', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif !important;
+      }
+
+      /* 基础样式 */
+      body {
+        margin: 0;
+        padding: 0;
+        background: #ffffff;
+        color: #333;
+      }
+
+      /* 主内容区域 */
+      .container {
+        margin-top: 80px;
+        padding: 2rem;
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .articles {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .section-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      .tags_card {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 2rem;
+      }
+
+      .tags_card .item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 8px 16px;
+        background: #f8f9fa;
+        border-radius: 20px;
+        color: #666;
+        text-decoration: none;
+        transition: all 0.3s;
+        border: 1px solid #e9ecef;
+        font-size: 14px;
+      }
+
+      .tags_card .item:hover {
+        background: #667eea;
+        color: white;
+        transform: translateY(-2px);
+      }
+
+      .tags_card .item.active {
+        background: #667eea;
+        color: white;
+      }
+
+      .count {
+        background: rgba(255, 255, 255, 0.3);
+        padding: 0.2rem 0.5rem;
+        border-radius: 10px;
+        font-size: 0.8rem;
+      }
+
+      .posts-section {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      /* 桌面端强制两列布局 */
+      @media (min-width: 1024px) {
+        .posts-section {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      .article-card {
+        display: block;
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        text-decoration: none;
+        color: #333;
+      }
+
+      .article-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      .article-card .img {
+        width: 100%;
+        height: 200px;
+        background-size: cover;
+        background-position: center;
+      }
+
+      .article-card .img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .article-card .content {
+        padding: 20px;
+      }
+
+      .article-card .tags {
+        margin-bottom: 10px;
+      }
+
+      .article-card .tag {
+        display: inline-block;
+        background: #667eea;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 10px;
+        font-size: 12px;
+        margin-right: 8px;
+      }
+
+      .article-card h3 {
+        margin: 10px 0;
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+      }
+
+      .article-card p {
+        margin: 0;
+        color: #666;
+        font-size: 14px;
+      }
+
+      /* 进入按钮样式 */
+      .enter-btn {
+        display: inline-block;
+        margin-top: 12px;
+        padding: 6px 14px;
+        background: #667eea;
+        color: #fff;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 8px rgba(102, 126, 234, 0.35);
+      }
+      .enter-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 14px rgba(102, 126, 234, 0.45);
+      }
+
+      /* 波纹动画 */
+      @keyframes ripple {
+        to {
+          transform: scale(4);
+          opacity: 0;
+        }
+      }
+
+      /* 响应式规则已统一到 components/responsive.css */
+    </style>
+  </head>
+  <body>
+    <svg style="display: none">
+      <symbol id="home" viewBox="0 0 1029 1024">
+        <path
+          d="M1001.423238 494.592q21.504 20.48 22.528 45.056t-16.384 40.96q-19.456 17.408-45.056 16.384t-40.96-14.336q-5.12-4.096-31.232-28.672t-62.464-58.88-77.824-73.728-78.336-74.24-63.488-60.416-33.792-31.744q-32.768-29.696-64.512-28.672t-62.464 28.672q-10.24 9.216-38.4 35.328t-65.024 60.928-77.824 72.704-75.776 70.656-59.904 55.808-30.208 27.136q-15.36 12.288-40.96 13.312t-44.032-15.36q-20.48-18.432-19.456-44.544t17.408-41.472q6.144-6.144 37.888-35.84t75.776-70.656 94.72-88.064 94.208-88.064 74.752-70.144 36.352-34.304q38.912-37.888 83.968-38.4t76.8 30.208q6.144 5.12 25.6 24.064t47.616 46.08 62.976 60.928 70.656 68.096 70.144 68.096 62.976 60.928 48.128 46.592zM447.439238 346.112q25.6-23.552 61.44-25.088t64.512 25.088q3.072 3.072 18.432 17.408l38.912 35.84q22.528 21.504 50.688 48.128t57.856 53.248q68.608 63.488 153.6 142.336l0 194.56q0 22.528-16.896 39.936t-45.568 18.432l-193.536 0 0-158.72q0-33.792-31.744-33.792l-195.584 0q-17.408 0-24.064 10.24t-6.656 23.552q0 6.144-0.512 31.232t-0.512 53.76l0 73.728-187.392 0q-29.696 0-47.104-13.312t-17.408-37.888l0-203.776q83.968-76.8 152.576-139.264 28.672-26.624 57.344-52.736t52.224-47.616 39.424-36.352 19.968-18.944z"
+          p-id="1884"
+        ></path>
+      </symbol>
+    </svg>
+
+    <!-- 导航栏组件 -->
+    <div class="header">
+      <div class="header_container">
+        <!-- 左侧Logo -->
+        <a href="javascript:void(0)" class="header_logo" id="logoElement">
+          <div class="logo-icon">
+            <div class="rh-image"></div>
+          </div>
+          <div class="afime-image">
+            <div class="afime-text"></div>
+          </div>
+        </a>
+
+        <!-- 中间导航菜单 -->
+        <div class="nav-menu">
+          <div class="nav-item">
+            <a href="tags.html" style="text-decoration: none; color: inherit">
+              <span>标签</span>
+            </a>
+          </div>
+          <div class="nav-item dropdown">
+            <span>分类</span>
+            <svg class="chevron" viewBox="0 0 24 24">
+              <path d="M7 10l5 5 5-5z" />
+            </svg>
+            <div class="dropdown-menu">
+              <div class="dropdown-item">记录点滴</div>
+              <div class="dropdown-item">灵感相矢</div>
+              <div class="dropdown-item">闲言碎语</div>
+              <div class="dropdown-item">实用分享</div>
+            </div>
+          </div>
+          <div class="nav-item dropdown">
+            <span>页面</span>
+            <svg class="chevron" viewBox="0 0 24 24">
+              <path d="M7 10l5 5 5-5z" />
+            </svg>
+            <div class="dropdown-menu">
+              <div class="dropdown-item">相册</div>
+              <div class="dropdown-item">关于</div>
+              <div class="dropdown-item">友链</div>
+              <div class="dropdown-item">留言</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右侧Let's Talk按钮 -->
+        <div class="header-icons">
+          <button class="lets-talk-btn" onclick="openContactModal()">Let's Talk</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 联系信息模态框 -->
+    <div id="contactModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeContactModal()">&times;</span>
+        <h2>联系我</h2>
+        <div class="contact-info">
+          <div class="contact-item">
+            <span class="contact-label">QQ:</span>
+            <span class="contact-value">2801110917</span>
+            <button class="copy-btn" onclick="copyToClipboard('2801110917')">复制</button>
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">微信:</span>
+            <span class="contact-value">Rhai_0-0_</span>
+            <button class="copy-btn" onclick="copyToClipboard('Rhai_0-0_')">复制</button>
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">邮箱:</span>
+            <span class="contact-value">2801110917@qq.com</span>
+            <button class="copy-btn" onclick="copyToClipboard('2801110917@qq.com')">复制</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <section class="articles">
+        <h2 class="section-title">标签</h2>
+        <!-- Tag item template: copy the <a> line below and just change the text -->
+        <template id="tagItemTemplate">
+          <a class="item" href="javascript:void(0)"
+            >#标签名
+            <div class="count">1</div></a
+          >
+        </template>
+        <div class="tags_card">
+          <a class="item active" href="javascript:void(0)"
+            >#千年老二
+            <div class="count">2</div></a
+          >
+        </div>
+
+        <div class="posts-section">
+          <a
+            class="article-card"
+            href="tag.html?tag=千年老二"
+            style="text-decoration: none; color: inherit"
+          >
+            <div
+              class="img"
+              style="
+                background-image: url('https://files.codelife.cc/wallhaven/full/p2/wallhaven-p2eg9e.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp');
+              "
+            ></div>
+            <div class="content">
+              <div class="tags">
+                <span class="tag">#千年老二</span>
+              </div>
+              <h3>全新开源个人主页-ZYYO主页</h3>
+              <p>2024-12-23</p>
+            </div>
+          </a>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      // 模态框功能
+      function openContactModal() {
+        document.getElementById('contactModal').style.display = 'block';
+      }
+
+      function closeContactModal() {
+        document.getElementById('contactModal').style.display = 'none';
+      }
+
+      // 复制到剪贴板功能
+      function copyToClipboard(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(text).then(() => {
+            showCopySuccess();
+          });
+        } else {
+          fallbackCopyTextToClipboard(text);
+        }
+      }
+
+      function fallbackCopyTextToClipboard(text) {
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        textArea.style.top = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+          document.execCommand('copy');
+          showCopySuccess();
+        } catch (err) {
+          console.error('复制失败:', err);
+        }
+
+        document.body.removeChild(textArea);
+      }
+
+      function showCopySuccess() {
+        // 创建成功提示
+        const notification = document.createElement('div');
+        notification.textContent = '复制成功！';
+        notification.style.cssText = `
+               position: fixed;
+               top: 20px;
+               right: 20px;
+               background: #4CAF50;
+               color: white;
+               padding: 10px 20px;
+               border-radius: 5px;
+               z-index: 3000;
+               animation: slideIn 0.3s ease;
+            `;
+
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+          notification.style.animation = 'slideOut 0.3s ease';
+          setTimeout(() => {
+            document.body.removeChild(notification);
+          }, 300);
+        }, 2000);
+      }
+
+      // 点击模态框外部关闭
+      window.onclick = function (event) {
+        const modal = document.getElementById('contactModal');
+        if (event.target === modal) {
+          closeContactModal();
+        }
+      };
+
+      // 标签点击事件代理：读取标签文字作为参数
+      document.querySelector('.tags_card').addEventListener('click', function (e) {
+        const link = e.target.closest('a.item');
+        if (!link) return;
+        const raw = link.textContent.trim();
+        const name = raw
+          .replace(/^#/, '')
+          .replace(/\s*\d*$/, '')
+          .trim();
+        selectTag(link, name);
+      });
+
+      // 标签选择动画效果
+      function selectTag(element, tagName) {
+        // 移除所有标签的active状态
+        document.querySelectorAll('.tags_card .item').forEach((item) => {
+          item.classList.remove('active');
+        });
+
+        // 添加active状态到当前标签
+        element.classList.add('active');
+
+        // 创建点击波纹效果
+        const ripple = document.createElement('div');
+        ripple.style.cssText = `
+                  position: absolute;
+                  border-radius: 50%;
+                  background: rgba(102, 126, 234, 0.3);
+                  transform: scale(0);
+                  animation: ripple 0.6s linear;
+                  pointer-events: none;
+              `;
+
+        // 设置波纹位置和大小
+        const rect = element.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = rect.width / 2 - size / 2 + 'px';
+        ripple.style.top = rect.height / 2 - size / 2 + 'px';
+
+        element.style.position = 'relative';
+        element.appendChild(ripple);
+
+        // 移除波纹元素
+        setTimeout(() => {
+          ripple.remove();
+        }, 600);
+
+        // 更新文章显示（这里可以根据标签筛选文章）
+        updateArticles(tagName);
+      }
+
+      // 更新文章显示
+      function updateArticles(tagName) {
+        const postsSection = document.querySelector('.posts-section');
+        const articles = postsSection.querySelectorAll('.article-card');
+
+        articles.forEach((article, index) => {
+          // 添加淡出动画
+          article.style.transition = 'all 0.3s ease';
+          article.style.opacity = '0';
+          article.style.transform = 'translateY(20px)';
+
+          setTimeout(() => {
+            // 模拟文章内容更新
+            article.style.opacity = '1';
+            article.style.transform = 'translateY(0)';
+          }, 300 + index * 100);
+        });
+      }
+
+      // 上划手势检测
+      let startY = 0;
+      let startX = 0;
+      let isDragging = false;
+      const logoElement = document.getElementById('logoElement');
+
+      // 触摸事件处理
+      logoElement.addEventListener('touchstart', function (e) {
+        startY = e.touches[0].clientY;
+        startX = e.touches[0].clientX;
+        isDragging = true;
+      });
+
+      logoElement.addEventListener('touchmove', function (e) {
+        if (!isDragging) return;
+
+        const currentY = e.touches[0].clientY;
+        const currentX = e.touches[0].clientX;
+        const deltaY = startY - currentY;
+        const deltaX = Math.abs(currentX - startX);
+
+        // 如果向上滑动距离足够且水平移动不大
+        if (deltaY > 50 && deltaX < 30) {
+          isDragging = false;
+          triggerSwipeUpAnimation();
+        }
+      });
+
+      logoElement.addEventListener('touchend', function () {
+        isDragging = false;
+      });
+
+      // 鼠标事件处理（桌面端）
+      logoElement.addEventListener('mousedown', function (e) {
+        startY = e.clientY;
+        startX = e.clientX;
+        isDragging = true;
+      });
+
+      logoElement.addEventListener('mousemove', function (e) {
+        if (!isDragging) return;
+
+        const currentY = e.clientY;
+        const currentX = e.clientX;
+        const deltaY = startY - currentY;
+        const deltaX = Math.abs(currentX - startX);
+
+        // 如果向上滑动距离足够且水平移动不大
+        if (deltaY > 50 && deltaX < 30) {
+          isDragging = false;
+          triggerSwipeUpAnimation();
+        }
+      });
+
+      logoElement.addEventListener('mouseup', function () {
+        isDragging = false;
+      });
+
+      // 防止拖拽时选中文本
+      logoElement.addEventListener('selectstart', function (e) {
+        e.preventDefault();
+      });
+
+      // 点击Logo触发上划动画
+      logoElement.addEventListener('click', function (e) {
+        // 防止与拖拽事件冲突
+        if (isDragging) return;
+        triggerSwipeUpAnimation();
+      });
+
+      // 触发画面放大效果
+      function triggerSwipeUpAnimation() {
+        // 跳转到封面页面并自动触发领域展开效果
+        window.location.href = 'index.html?expand=true';
+      }
+
+      // 直接返回封面页面（保留备用）
+      function returnToCover() {
+        window.location.href = 'index.html';
+      }
+
+      // 模态框功能 - 全局函数
+      function openContactModal() {
+        document.getElementById('contactModal').style.display = 'block';
+      }
+
+      function closeContactModal() {
+        document.getElementById('contactModal').style.display = 'none';
+      }
+
+      // 复制到剪贴板功能
+      function copyToClipboard(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(text).then(() => {
+            showCopySuccess();
+          });
+        } else {
+          fallbackCopyTextToClipboard(text);
+        }
+      }
+
+      function fallbackCopyTextToClipboard(text) {
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        textArea.style.top = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+          document.execCommand('copy');
+          showCopySuccess();
+        } catch (err) {
+          console.error('复制失败:', err);
+        }
+
+        document.body.removeChild(textArea);
+      }
+
+      function showCopySuccess() {
+        // 创建成功提示
+        const notification = document.createElement('div');
+        notification.textContent = '复制成功！';
+        notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: #4CAF50;
+                    color: white;
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                    z-index: 3000;
+                    animation: slideIn 0.3s ease;
+                `;
+
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+          notification.style.animation = 'slideOut 0.3s ease';
+          setTimeout(() => {
+            document.body.removeChild(notification);
+          }, 300);
+        }, 2000);
+      }
+
+      // 点击模态框外部关闭
+      window.onclick = function (event) {
+        const modal = document.getElementById('contactModal');
+        if (event.target === modal) {
+          closeContactModal();
+        }
+      };
+    </script>
+  </body>
+</html>

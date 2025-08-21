@@ -1,0 +1,133 @@
+/* Responsive defaults shared across pages */
+/* Global media queries and lightweight layout tweaks only. */
+
+/* Images and videos scale within containers */
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Generic container spacing used in multiple pages */
+.container {
+  max-width: 1200px;
+  margin: 80px auto 40px;
+  padding: 0 20px;
+}
+
+/* Tag detail page two-column layout (tag.html) */
+.tag-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 24px;
+}
+
+/* Posts grid on tags.html - now handled inline in tags.html */
+
+/* Recent list item image default (tag.html) */
+.recent-item img {
+  width: 68px;
+  height: 48px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+/* Typography block used for long content (tag.html) */
+.article-content {
+  padding: 28px 32px;
+  font-size: 20px;
+}
+
+/* ========== Breakpoints ========== */
+
+/* Phones */
+@media (max-width: 768px) {
+  .container {
+    margin: 64px auto 24px;
+    padding: 0 12px;
+  }
+
+  .tag-layout {
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+    gap: 8px;
+    padding: 0 8px;
+  }
+
+  .stats-tags {
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .recent-item img {
+    width: 56px;
+    height: 40px;
+  }
+
+  .recent-item .title {
+    max-width: 140px;
+  }
+
+  .article-content {
+    padding: 18px;
+    font-size: 18px;
+  }
+
+  /* tags.html list becomes single column - handled inline */
+
+  /* Header container side padding (navbar) */
+  .header_container {
+    padding: 0 12px;
+  }
+
+  /* Global: collapse fixed sidebar layouts on phones */
+  .sidebar {
+    display: none !important;
+  }
+
+  .main-content,
+  .container,
+  .footer {
+    margin-left: 0 !important;
+  }
+}
+
+/* Tablets */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .container {
+    padding: 0 16px;
+  }
+
+  .tag-layout {
+    grid-template-columns: 260px 1fr;
+    gap: 20px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 12px;
+  }
+
+  .article-content {
+    padding: 24px;
+    font-size: 19px;
+  }
+}
+
+/* Desktops: two-column article grid now handled inline in tags.html */
+
+/* Wide screens */
+@media (min-width: 1440px) {
+  .container {
+    max-width: 1280px;
+  }
+
+  .article-content {
+    padding: 32px 40px;
+    font-size: 20px;
+  }
+}

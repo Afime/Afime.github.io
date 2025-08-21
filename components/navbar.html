@@ -1,0 +1,77 @@
+<!-- 导航栏组件 -->
+<div class="header">
+   <div class="header_container">
+      <!-- 左侧Logo -->
+      <a href="javascript:void(0)" class="header_logo" id="logoElement">
+         <div class="logo-icon">
+            <div class="rh-image"></div>
+         </div>
+         <div class="afime-image">
+            <div class="afime-text">Afime</div>
+         </div>
+      </a>
+      
+      <!-- 中间导航菜单 -->
+      <div class="nav-menu">
+         <div class="nav-item">
+            <a href="tags.html" style="text-decoration: none; color: inherit;">
+               <span>标签</span>
+            </a>
+         </div>
+         <div class="nav-item dropdown">
+            <span>分类</span>
+            <svg class="chevron" viewBox="0 0 24 24">
+               <path d="M7 10l5 5 5-5z"/>
+            </svg>
+            <div class="dropdown-menu">
+               <div class="dropdown-item">记录点滴</div>
+               <div class="dropdown-item">灵感相矢</div>
+               <div class="dropdown-item">闲言碎语</div>
+               <div class="dropdown-item">实用分享</div>
+            </div>
+         </div>
+         <div class="nav-item dropdown">
+            <span>页面</span>
+            <svg class="chevron" viewBox="0 0 24 24">
+               <path d="M7 10l5 5 5-5z"/>
+            </svg>
+            <div class="dropdown-menu">
+               <div class="dropdown-item">相册</div>
+               <div class="dropdown-item">关于</div>
+               <div class="dropdown-item">友链</div>
+               <div class="dropdown-item">留言</div>
+            </div>
+         </div>
+      </div>
+      
+      <!-- 右侧Let's Talk按钮 -->
+      <div class="header-icons">
+         <button class="lets-talk-btn" onclick="openContactModal()">Let's Talk</button>
+      </div>
+   </div>
+</div>
+
+<!-- 联系信息模态框 -->
+<div id="contactModal" class="modal">
+   <div class="modal-content">
+      <span class="close" onclick="closeContactModal()">&times;</span>
+      <h2>联系我</h2>
+      <div class="contact-info">
+         <div class="contact-item">
+            <span class="contact-label">QQ:</span>
+            <span class="contact-value">2801110917</span>
+            <button class="copy-btn" onclick="copyToClipboard('2801110917')">复制</button>
+         </div>
+         <div class="contact-item">
+            <span class="contact-label">微信:</span>
+            <span class="contact-value">Rhai_0-0_</span>
+            <button class="copy-btn" onclick="copyToClipboard('Rhai_0-0_')">复制</button>
+         </div>
+         <div class="contact-item">
+            <span class="contact-label">邮箱:</span>
+            <span class="contact-value">2801110917@qq.com</span>
+            <button class="copy-btn" onclick="copyToClipboard('2801110917@qq.com')">复制</button>
+         </div>
+      </div>
+   </div>
+</div>

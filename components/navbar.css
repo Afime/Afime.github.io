@@ -1,0 +1,497 @@
+/* 导航栏样式 */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  z-index: 1001;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.header:hover {
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(25px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transform: translateY(0);
+}
+
+/* 当显示咒术回战封面时，保持顶部导航显示并浮在视频上 */
+.jujutsu-hero ~ .header,
+.jujutsu-hero + .header {
+  display: flex;
+  z-index: 1001;
+}
+
+.header_container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  gap: 20px;
+}
+
+.header_logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.9);
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+  gap: 5px;
+  cursor: pointer;
+  position: relative;
+  font-family: 'Noto Serif SC', 'Source Han Serif SC', 'SimSun', serif;
+}
+
+.header_logo:active {
+  cursor: pointer;
+}
+
+.header_logo::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -10px;
+  right: -10px;
+  bottom: -5px;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(15px);
+  border-radius: 16px;
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 10;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.header_logo::before {
+  content: 'Home';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 11;
+  text-shadow: none;
+}
+
+.header_logo:hover::after {
+  opacity: 1;
+}
+
+.header_logo:hover::before {
+  opacity: 1;
+}
+
+.header:hover .header_logo {
+  color: #333;
+  text-shadow: none;
+}
+
+.header:hover .afime-text {
+  color: #333;
+  text-shadow: none;
+}
+
+.logo-icon {
+  width: 28px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(12px);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.rh-image {
+  width: 100%;
+  height: 100%;
+  background: #1a1a1a;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 14px;
+  color: white;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+  position: relative;
+  font-family: 'LXGW WenKai', 'Source Han Serif SC', 'Noto Serif SC', serif;
+}
+
+.rh-image::before {
+  content: 'RH';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: bold;
+  font-size: 14px;
+  color: white;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+  font-family: 'LXGW WenKai', 'Source Han Serif SC', 'Noto Serif SC', serif;
+}
+
+.header:hover .logo-icon {
+  background: rgba(255, 255, 255, 0.95);
+  color: #333;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.header:hover .rh-image {
+  background: #1a1a1a;
+}
+
+.header_logo svg {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+  filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.5));
+  transition: all 0.3s ease;
+}
+
+.header:hover .header_logo svg {
+  filter: none;
+}
+
+.afime-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.afime-text {
+  font-weight: bold;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.9);
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.afime-text::before {
+  content: 'A';
+  font-size: 20px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.9);
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+  margin-right: 0px;
+  transform: translateY(1px);
+}
+
+.afime-text::after {
+  content: 'fime';
+  font-size: 16px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.9);
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+  transform: translateY(2px);
+}
+
+/* 中间导航菜单样式 */
+.nav-menu {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 8px 16px;
+  backdrop-filter: blur(12px);
+  transition: all 0.3s ease;
+  gap: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.header:hover .nav-menu {
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.9);
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.header:hover .nav-item {
+  color: #333;
+}
+
+.nav-item:hover {
+  background: rgba(0, 0, 0, 0.15);
+  color: #000;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header:hover .nav-item:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.chevron {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+  transition: transform 0.3s ease;
+}
+
+.nav-item:hover .chevron {
+  transform: rotate(180deg);
+}
+
+/* 下拉菜单样式 */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(15px);
+  border-radius: 8px;
+  padding: 8px 0;
+  min-width: 120px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 1002;
+  margin-top: 8px;
+}
+
+.dropdown:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-item {
+  padding: 8px 16px;
+  color: #333;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.dropdown-item:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #667eea;
+}
+
+/* 当导航栏悬停时，下拉菜单保持白色背景 */
+.header:hover .dropdown-menu {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.header:hover .dropdown-item {
+  color: #333;
+}
+
+.header:hover .dropdown-item:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #667eea;
+}
+
+/* 右侧Let's Talk按钮样式 */
+.header-icons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.lets-talk-btn {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.lets-talk-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+/* 模态框样式 */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  background: linear-gradient(135deg, rgba(26, 32, 44, 0.95), rgba(45, 55, 72, 0.95));
+  backdrop-filter: blur(20px);
+  margin: 15% auto;
+  padding: 30px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 400px;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
+  top: 15px;
+}
+
+.close:hover {
+  color: #000;
+}
+
+.modal-content h2 {
+  margin-bottom: 20px;
+  color: #ffffff;
+  text-align: center;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.contact-label {
+  font-weight: bold;
+  color: #ffffff;
+  min-width: 60px;
+}
+
+.contact-value {
+  color: #e2e8f0;
+  margin: 0 10px;
+  flex: 1;
+}
+
+.copy-btn {
+  background: #667eea;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.3s ease;
+}
+
+.copy-btn:hover {
+  background: #5a6fd8;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .header_container {
+    padding: 0 15px;
+    gap: 15px;
+  }
+
+  .nav-menu {
+    gap: 15px;
+    padding: 6px 12px;
+  }
+
+  .nav-item {
+    font-size: 13px;
+    padding: 3px 6px;
+  }
+
+  .lets-talk-btn {
+    font-size: 16px;
+    padding: 6px 12px;
+  }
+
+  .afime-text::before {
+    font-size: 18px;
+  }
+
+  .afime-text::after {
+    font-size: 14px;
+    transform: translateY(1px);
+  }
+}
+
+/* 动画效果 */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}

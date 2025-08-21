@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>导航栏组件示例</title>
+   
+   <!-- 引入导航栏样式 -->
+   <link rel="stylesheet" href="navbar.css">
+   
+   <style>
+      /* 页面基础样式 */
+      body {
+         margin: 0;
+         padding: 0;
+         font-family: 'Arial', sans-serif;
+         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+         min-height: 100vh;
+         color: white;
+      }
+      
+      .content {
+         margin-top: 80px;
+         padding: 2rem;
+         text-align: center;
+      }
+      
+      .title {
+         font-size: 2.5rem;
+         margin-bottom: 1rem;
+         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+      
+      .description {
+         font-size: 1.2rem;
+         margin-bottom: 2rem;
+         opacity: 0.9;
+      }
+      
+      .features {
+         display: grid;
+         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+         gap: 2rem;
+         margin-top: 3rem;
+      }
+      
+      .feature-card {
+         background: rgba(255, 255, 255, 0.1);
+         backdrop-filter: blur(10px);
+         border-radius: 15px;
+         padding: 2rem;
+         border: 1px solid rgba(255, 255, 255, 0.2);
+         transition: all 0.3s ease;
+      }
+      
+      .feature-card:hover {
+         transform: translateY(-5px);
+         background: rgba(255, 255, 255, 0.15);
+      }
+      
+      .feature-icon {
+         font-size: 3rem;
+         margin-bottom: 1rem;
+      }
+      
+      .feature-title {
+         font-size: 1.5rem;
+         margin-bottom: 1rem;
+         font-weight: bold;
+      }
+      
+      .feature-desc {
+         opacity: 0.9;
+         line-height: 1.6;
+      }
+   </style>
+</head>
+<body>
+   <!-- 引入导航栏组件 -->
+   <div id="navbar-container"></div>
+   
+   <div class="content">
+      <h1 class="title">导航栏组件示例</h1>
+      <p class="description">这是一个完整的导航栏组件包，包含所有功能和样式</p>
+      
+      <div class="features">
+         <div class="feature-card">
+            <div class="feature-icon">🎨</div>
+            <h3 class="feature-title">美观设计</h3>
+            <p class="feature-desc">现代化的毛玻璃效果，平滑的动画过渡，响应式设计适配各种设备</p>
+         </div>
+         
+         <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3 class="feature-title">功能丰富</h3>
+            <p class="feature-desc">下拉菜单、联系模态框、复制功能、手势支持，满足各种交互需求</p>
+         </div>
+         
+         <div class="feature-card">
+            <div class="feature-icon">🔧</div>
+            <h3 class="feature-title">易于定制</h3>
+            <p class="feature-desc">模块化设计，独立的HTML、CSS、JS文件，方便修改和扩展</p>
+         </div>
+         
+         <div class="feature-card">
+            <div class="feature-icon">📱</div>
+            <h3 class="feature-title">移动友好</h3>
+            <p class="feature-desc">完美支持触摸设备，手势操作，自适应布局，移动端体验优秀</p>
+         </div>
+         
+         <div class="feature-card">
+            <div class="feature-icon">🚀</div>
+            <h3 class="feature-title">高性能</h3>
+            <p class="feature-desc">优化的代码结构，流畅的动画效果，快速的加载速度</p>
+         </div>
+         
+         <div class="feature-card">
+            <div class="feature-icon">💡</div>
+            <h3 class="feature-title">开箱即用</h3>
+            <p class="feature-desc">简单的引入方式，详细的文档说明，快速集成到任何项目中</p>
+         </div>
+      </div>
+   </div>
+   
+   <!-- 引入导航栏脚本 -->
+   <script src="navbar.js"></script>
+   
+   <script>
+      // 动态加载导航栏HTML
+      fetch('navbar.html')
+         .then(response => response.text())
+         .then(html => {
+            document.getElementById('navbar-container').innerHTML = html;
+         })
+         .catch(error => {
+            console.error('加载导航栏失败:', error);
+         });
+   </script>
+</body>
+</html>
